@@ -28,6 +28,7 @@ echo -e "切换内核..."
 grub2-set-default 'CentOS Linux (${kernel_version}) 7 (Core)'
 echo -e "启用模块..."
 
+echo -e "优化内核参数"
 fileName="/etc/sysctl.conf"
 
 cat>"${filename}"<<EOF
@@ -79,7 +80,10 @@ net.ipv4.tcp_congestion_control=bbrplus
 # net.ipv4.tcp_congestion_control = cubic
 EOF
 
+sysctl -p
+
 # 优化系统文件描述符
+echo -e "优化系统文件描述符"
 ulimit -SHn 51200
 
 echo "* soft nofile 51200" >> /etc/security/limits.conf
